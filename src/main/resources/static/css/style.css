@@ -1,0 +1,147 @@
+body{
+	
+	background:#D08856;
+}
+
+
+
+.bg-primary{
+	
+	background-color:#D05663!important;
+}
+
+input[type=text]{
+	 width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+ background-color:#FFD5AF;
+}
+
+input[type=email]{
+	 width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+ background-color:#FFD5AF;
+}
+
+
+
+.banner{
+	
+	width:100%;
+	height: 100vh;
+	color:white;
+	background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),url(../img/parking.jpg);
+	background-size:cover;
+}
+
+.my-card{
+	
+	background-color:#D08856;
+}
+
+
+
+.sidebar{
+	width: 18%;
+	background: #FBE0C3;
+	
+	height:100%;
+	position: fixed;
+	padding-top: 45px;
+	z-index: 9999999999999999999999;
+	
+}
+
+	.content{
+	
+	margin-left: 20%;
+	
+	}
+	
+
+.sidebar a{
+	
+	display:block;
+	width:100%;
+	font-size:20px;
+	padding: 10px 25px;
+	text-decoration: none;
+	color:black;
+	
+}
+
+	.sidebar a:hover{
+		background: #F6F4E8;
+	
+	}
+	
+	.sidebar .divider{
+	height: .5px;
+	width: 100%;
+	background: #e2e2e2;
+	margin-top: 15px;
+	
+	}
+	
+	
+	@media only screen and (max-width:600px){
+	.sidebar{
+	display:none;
+	width: 80% !important;
+	background: #342628;
+	height:100vh;
+	position:fixed;
+	padding-top: 20px;
+	
+	
+	}
+		.content{
+		margin-left: 0%!important;
+		
+		
+		
+		}
+	
+	}
+	
+	
+	.sidebar .crossBtn{
+		position: absolute;
+		top:0;
+		right: 35px;
+		font-size: 36px;
+		cursor: pointer;
+	
+	}
+	
+	.search-container{
+		position: relative;
+	}
+	
+	.search-result{
+	
+	position: absolute;
+	background: white;
+	width: 100%;
+	padding: 10px;
+	border:1px solid gray;
+	display:none;
+	
+	
+	}
+	
+	
+	/* 
+	for sign up page
+	 */
+	 
+	 

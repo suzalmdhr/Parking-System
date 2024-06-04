@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parking Management System</title>
+
+    <!-- <link rel="stylesheet" data-th-href="@{'/css/output.css'}"> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="" th:href="@{/css/style1.css}" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .slot {
+        width: 100px;
+        height: 50px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+      }
+
+      .booked {
+        background-color: green !important;
+        color: white;
+      }
+
+      .block {
+        display: block;
+        width: 30%;
+        border: none;
+        background-color: white;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-primary bg-body-tertiary"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Parking Management</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href=""
+                th:href="@{/user/userHome}"
+                >Home</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" th:text="${username}"></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/logout}" href="">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <h2>Parking Management System</h2>
+    <h3 th:text="${name}"></h3>
+    <h3 th:text="${address}"></h3>
+
+    <div id="slots">
+      <a href="" th:href="@{/user/userHome}">Home</a>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Details</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              th:object="${booking}"
+              method="post"
+              th:action="@{/user/process-contact}"
+              class="mt-2"
+              onsubmit="return submitForm(this);"
+            >
+              <input type="hidden" id="slotId" name="sId" />
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Enter name</label
+                >
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <input
+                  type="hidden"
+                  name="slotname"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Enter email</label
+                >
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Enter start time</label
+                >
+                <input
+                  type="datetime-local"
+                  name="sDate"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Enter end time</label
+                >
+                <input
+                  type="datetime-local"
+                  name="eDate"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Enter license plate number</label
+                >
+                <input
+                  type="text"
+                  name="licNum"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Available Slots</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+
+      function createButtons(slotsArray) {
+        const tableBody = document.getElementById("table-body");
+
+        slotsArray.forEach(function(slot) {
+          var button = document.createElement("button");
+          button.textContent = slot.slotName;
+          var element = document.createElement("span");
+
+
+
+
+
+
+          // Set background color based on status
+          if (slot.status === null || slot.status === false || slot.status === 0) {
+            button.style.backgroundColor = "green";
+            button.classList.add("block");
+            button.classList.add("btn");
+            button.classList.add("btn-primary");
+            button.dataset.bsTarget = "#exampleModal"; // Set modal target
+            button.dataset.bsToggle = "modal";
+          } else {
+            button.style.backgroundColor = "red";
+            button.classList.add("block");
+            button.classList.add("btn");
+            button.classList.add("btn-primary");
+          }
+          button.addEventListener("click", () => {
+            document.getElementById("exampleModalLabel").innerHTML = slot.slotName;
+            document.getElementById("slotId").value = slot.sId;
+          });
+
+          let tabData = document.createElement("td");
+          let SlotCell = document.createElement("td");
+
+
+          tabData.textContent = "Slot Number";
+
+          SlotCell.appendChild(button);
+
+
+
+          var row = document.createElement("tr");
+
+          // Append the cells to the table row in the desired order
+          row.appendChild(tabData); // Append the "slot" cell
+          row.appendChild(SlotCell); // Append the button cell
+
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      // Call the function with the array of objects
+      var value = [[${value}]];
+      var slots = [[${slots}]];
+      var status = [[${status}]];
+      console.log(slots);
+
+      createButtons(slots);
+
+      /*]]>*/
+    </script>
+  </body>
+</html>

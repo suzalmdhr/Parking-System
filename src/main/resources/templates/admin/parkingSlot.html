@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="admin/base::layout(~{::div})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+	
+		<div class="my-card mt-2 " id="div">
+  <div class="card-body">
+  
+  <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+ <span th:text="${session.message.content}"></span>
+ <th:block th:text="${@sessionHelper.removeMessageSession()}"></th:block>
+</div>
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    
+    	<form id="form" th:object="${flooring}" enctype="multipart/form-data" method="post" 
+    	th:action="@{/admin/processSlot}" class="mt-2">
+    	
+    	
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter parking floor</label>
+    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter parking address</label>
+    <input type="text" name="Address" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+    
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter no of Slots </label>
+    <input type="number" name="numberOfSlots" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+   
+  </div>
+  
+  
+   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  <div class="container text-center">
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+	</div>
+</form>
+    
+    </div>
+  </div>
+</div>
+		
+	</div>	
+		
+		
+    <!-- <script th:src="@{/js/script1.js}"></script>   -->
+		</div>
+
+       
+</body>
+</html>
