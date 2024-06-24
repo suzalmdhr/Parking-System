@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="admin/base::layout(~{::div})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>User List</title>
+  </head>
+  <body>
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Role</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Action</th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.role}"></td>
+            <td th:text="${user.Gender}"></td>
+           
+
+            <td>
+              <a href="" th:if="${user.email != currentUserEmail}" th:href="@{'/admin/deleteUser/'+${user.UserId}}">Delete</a>
+              <a href="" th:href="@{'/admin/editUser/'+${user.UserId}}">Edit</a>
+            </td>
+          
+           
+          </tr>  
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/base::layout(~{::div})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+
+.alert-success {
+    background-color: #d4edda; /* light green */
+    color: #155724; /* dark green text */
+}
+
+.alert-danger {
+    background-color: #f8d7da; /* light red */
+    color: #721c24; /* dark red text */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="card">
+
+                            <div class="card-body">
+
+
+                                <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+                                    <span th:text="${session.message.content}"></span>
+                                    <th:block th:text="${@sessionHelper.removeSession()}"></th:block>
+                                </div>
+
+                                <h3> Change password</h3>
+                                    <form action="" th:action="@{/user/change-password}" method="post">
+                                            <div class="form-group mb-3">
+                                                <input type="password" name="oldPass" class="form-control" placeholder="Enter your old password">
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <input type="password" name="newPass" class="form-control" placeholder="Enter new password">
+                                            </div>
+
+                                            <div class="container text-center"> 
+
+                                                <button type="submit" class="btn btn-success">Change</button>
+                                                <button type="reset" class="btn btn-warning">Reset</button>
+                                            </div>
+
+
+                                    </form>
+
+
+                            </div>
+
+
+                    </div>
+
+
+            </div>
+
+
+        </div>    
+    
+    </div>
+    
+</body>
+</html>

@@ -74,7 +74,16 @@ public class HomeController {
 				return "hawa";
 			}
 
-			user.setRole("ROLE_USER");
+
+			User existedUser = this.userDao.getUserByEmail(user.getEmail());
+
+			if(existedUser != null){
+				m.addAttribute("user", user);
+				session.setAttribute("message", new MyMessage("This email has already been used","alert-danger"));
+				return "hawa";
+			}
+
+			user.setRole("ROLE_ADMIN");
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			this.userDao.save(user);
 

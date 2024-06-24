@@ -1,13 +1,13 @@
 body{
 	
-	background:#D08856;
+	background:#888888;
 }
 
 
 
 .bg-primary{
 	
-	background-color:#D05663!important;
+	background-color:#e55b1c!important;
 }
 
 input[type=text]{
@@ -18,7 +18,7 @@ input[type=text]{
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
- background-color:#FFD5AF;
+ 
 }
 
 input[type=email]{
@@ -29,7 +29,7 @@ input[type=email]{
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
- background-color:#FFD5AF;
+
 }
 
 
@@ -52,7 +52,7 @@ input[type=email]{
 
 .sidebar{
 	width: 18%;
-	background: #FBE0C3;
+	background: #b3bfb6;
 	
 	height:100%;
 	position: fixed;

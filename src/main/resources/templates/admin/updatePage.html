@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="admin/base::layout(~{::div})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+	
+		<div class="my-card mt-2 " id="div">
+  <div class="card-body">
+  
+  
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    
+    	<form id="form"  method="post" 
+    	th:action="@{/admin/updateUser}" class="mt-2">
+
+        <div class="mb-3">
+           
+            <input type="hidden" th:value="${user.UserId}" name="UserId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    	
+    	
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter username</label>
+    <input type="text" th:value="${user.username}" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter email</label>
+    <input type="email" th:value="${user.email}" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+  <div class="mb-3">
+    
+    <input type="hidden" th:value="${user.password}" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+    
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter phone number </label>
+    <input type="number" th:value="${user.phoneNumber}" name="phoneNumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+   
+  </div>
+
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter role</label>
+    <input type="text" th:value="${user.role}" name="role" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+    
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Enter gender</label>
+    <input type="text" th:value="${user.Gender}" name="Gender" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+    
+   
+  </div>
+  
+  
+   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  <div class="container text-center">
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+	</div>
+</form>
+    
+    </div>
+  </div>
+</div>
+		
+	</div>	
+		
+		
+    <!-- <script th:src="@{/js/script1.js}"></script>   -->
+		</div>
+
+       
+</body>
+</html>

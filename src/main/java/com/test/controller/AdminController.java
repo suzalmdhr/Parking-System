@@ -9,6 +9,9 @@ import java.util.Optional;
 import org.hibernate.type.descriptor.java.LocalDateJavaType;
 import org.hibernate.type.descriptor.java.LocalDateTimeJavaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.dao.BookingDao;
 import com.test.dao.FloorRepo;
@@ -27,7 +31,10 @@ import com.test.entities.Bookings;
 import com.test.entities.Slot;
 import com.test.entities.User;
 import com.test.entities.floor;
+import com.test.helper.MyMessage;
 import com.test.service.EntityService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
@@ -109,7 +116,7 @@ public class AdminController {
 	// }
 
 	// book garne process this is
-	@PostMapping("/process-contact")
+	@GetMapping("/process-contact")
 	public String addForm(@ModelAttribute Bookings bookings, @ModelAttribute Slot slots, Principal principal, Model m) {
 
 		String name = principal.getName();
@@ -153,6 +160,51 @@ public class AdminController {
 		model.addAttribute("floors", all);
 
 		return "admin/parkingList";
+	}
+
+	@GetMapping("/userlist")
+	public String usersList(Model model){
+
+		List<User> allUsers = this.userDao.findAll();
+		model.addAttribute("users", allUsers);
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUser = authentication.getName();
+		model.addAttribute("currentUserEmail", currentUser);
+
+		return "admin/userList";
+	}
+
+	//deleteUser
+
+	@GetMapping("/deleteUser/{uid}")
+	public String delUser(@PathVariable("uid") int uid){
+		System.out.println(uid);
+
+		User user = this.userDao.findById(uid).get();
+		this.userDao.delete(user);
+
+
+		return "redirect:/admin/userlist";
+	}
+
+	@GetMapping("/editUser/{uid}")
+	public String updateOne(@PathVariable("uid")int uid,Model model){
+
+
+		User gotUser = this.userDao.findById(uid).get();
+		model.addAttribute("user", gotUser);
+		return "admin/updatePage";
+	}
+
+
+	@PostMapping("/updateUser")
+	public String updateTwo(@ModelAttribute User user){
+		System.out.println(user);
+
+		this.userDao.save(user);
+
+return "redirect:/admin/userlist";
 	}
 
 	@GetMapping("/book")
@@ -272,5 +324,44 @@ public class AdminController {
 
 		return String.format("redirect:/admin/book/%d", fid);
 	}
+
+	//password changa gareko admin
+	@GetMapping("/adminChange")
+	public String passChange(){
+
+		return "admin/change";
+	}
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@PostMapping("change-password")
+	public String changePass(@RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass,Principal principal,HttpSession session){
+
+
+User userAyo = this.userDao.getUserByEmail(principal.getName());
+
+if(this.bCryptPasswordEncoder.matches(oldPass, userAyo.getPassword())){
+	userAyo.setPassword(bCryptPasswordEncoder.encode(newPass));
+	this.userDao.save(userAyo);
+	session.setAttribute("message", new MyMessage("Password changed successfully", "alert-success"));
+}
+else{
+	session.setAttribute("message", new MyMessage("Error during password change", "alert-danger"));
+}
+
+
+		return "admin/change";
+	}
+
+
+	@GetMapping("/checkBookingStatus")
+@ResponseBody
+public boolean checkBookingStatus(Principal principal) {
+    String name = principal.getName();
+    User userByEmail = this.userDao.getUserByEmail(name);
+    return bookingDao.existsByUserAndStatus(userByEmail, true);
+}
+
 
 }
